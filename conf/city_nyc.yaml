@@ -1,0 +1,38 @@
+# City config: everything city-specific lives here. A new city = a new file.
+city: nyc
+display_name: New York City
+
+# Unity Catalog location (Free Edition: only the `workspace` catalog is available)
+catalog: workspace
+schema: heat
+raw_volume: /Volumes/workspace/heat/raw
+
+# lon/lat bounding box (west, south, east, north), EPSG:4326
+bbox: [-74.2591, 40.4774, -73.7004, 40.9176]
+
+landsat:
+  stac_url: https://planetarycomputer.microsoft.com/api/stac/v1
+  collection: landsat-c2-l2
+  platforms: [landsat-8, landsat-9]
+  years: [2019, 2020, 2021, 2022, 2023, 2024]
+  months: [6, 7, 8]            # summer only
+  max_cloud_cover: 20          # scene-level %, pixel-level QA mask applied too
+  max_scenes: 15               # Free Edition compute guard; raise later
+  # Collection 2 Level-2 surface temperature scaling: K = DN * scale + offset
+  st_scale: 0.00341802
+  st_offset: 149.0
+
+h3:
+  model_res: 10                # ~15,000 m2, matches ~100 m native thermal resolution
+  map_res: 11                  # ~2,150 m2, display only
+
+units:
+  store: celsius
+  display: fahrenheit
+
+agent:
+  llm_endpoint: databricks-llama-4-maverick
+  fallback_llm_endpoint: databricks-meta-llama-3-3-70b-instruct
+  # Planner-facing cost table (USD per tree, installed). Placeholder: replace with city figures.
+  default_cost_per_tree: 1500
+  cost_tolerance: 0.35         # flag budget/n_trees that differs from cost table by >35%

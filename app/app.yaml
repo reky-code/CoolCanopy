@@ -1,0 +1,14 @@
+command: ["streamlit", "run", "app.py", "--server.headless", "true"]
+env:
+  - name: HEAT_ARTIFACTS
+    value: /Volumes/workspace/heat/artifacts/houston/app
+  - name: HEAT_SCHEMA
+    value: workspace.heat
+  - name: LLM_ENDPOINT
+    value: databricks-llama-4-maverick
+  - name: DEFAULT_COST_PER_TREE
+    value: "1500"
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: warehouse
+  - name: MLFLOW_EXPERIMENT
+    value: /Shared/heat-trees-agent-traces

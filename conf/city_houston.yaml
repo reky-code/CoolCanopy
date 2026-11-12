@@ -1,0 +1,124 @@
+# City config: Houston, TX. Everything city-specific lives here.
+city: houston
+display_name: Houston
+
+catalog: workspace
+schema: heat
+raw_volume: /Volumes/workspace/heat/raw
+
+# Full-purpose city limits extent from COH_Limits (SERVICE_TY='FULL'), EPSG:4326.
+# The bbox includes some non-city land; silver/gold clip to the city-limits polygon.
+bbox: [-95.9265, 29.5332, -95.0007, 30.1295]
+
+boundaries:
+  city_limits:
+    url: https://services.arcgis.com/su8ic9KbA7PYVxPS/ArcGIS/rest/services/COH_Limits/FeatureServer/0
+    where: "SERVICE_TY='FULL'"     # full-purpose city limits only (not MUD limited-purpose areas)
+    name_field: SERVICE_TY
+  # Current council districts: "City Council Boundaries Approved 10-12-2022", used from the
+  # Nov 2023 election on. (The older City_Council_Districts layer has pre-2022 boundaries.)
+  council_district:
+    url: https://services.arcgis.com/su8ic9KbA7PYVxPS/ArcGIS/rest/services/CoH_Council_Districts/FeatureServer/51
+    where: "1=1"
+    name_field: DISTRICT
+  # 88 Super Neighborhoods: the city's neighborhood-scale planning areas (Planning & Development).
+  super_neighborhood:
+    url: https://services.arcgis.com/su8ic9KbA7PYVxPS/ArcGIS/rest/services/COH_SUPER_NEIGHBORHOODS/FeatureServer/0
+    where: "1=1"
+    name_field: SNBNAME
+  district_ids: [A, B, C, D, E, F, G, H, I, J, K]   # Houston districts are letters
+
+# People. The Census API now needs a key, so we use keyless sources instead:
+#  - 2020 Census block groups (TIGERweb): geometry + POP100, used to place residents
+#  - CDC/ATSDR SVI 2022 tracts: shares of 65+, 17-and-under, poverty <150%, no vehicle, and the
+#    overall vulnerability percentile (RPL_THEMES)
+people:
+  block_groups_url: https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/tigerWMS_Census2020/MapServer/8
+  svi_csv_url: https://svi.cdc.gov/Documents/Data/2022/csv/states/Texas.csv
+  counties: ["48201", "48157", "48339"]   # Harris, Fort Bend, Montgomery (Houston spans all three)
+  # residents are spread over a block group's hexes in proportion to (impervious % + floor);
+  # people live where it's built up, not in bayous and parks
+  dasymetric_floor: 5
+
+# NLCD 30 m percent layers from MRLC's WCS (EPSG:5070). Canopy = USFS Tree Canopy Cover.
+# Several canopy years allow a canopy-change vs heat-change check later.
+rasters:
+  wcs_url: https://www.mrlc.gov/geoserver/mrlc_download/wcs
+  layers:
+    canopy_2021: mrlc_download__nlcd_tcc_conus_2021_v2021-4
+    canopy_2016: mrlc_download__nlcd_tcc_conus_2016_v2021-4
+    canopy_2011: mrlc_download__nlcd_tcc_conus_2011_v2021-4
+    imperv_2021: mrlc_download__NLCD_2021_Impervious_L48
+
+trees:
+  # Partial inventory, and its license limits use to Urban Forestry maintenance and planting
+  # decisions. Check permission before use. Canopy comes from Meta/WRI 1 m CHM + NLCD TCC instead.
+  street_tree_inventory: https://geohwp.houstontx.gov/arcgis/rest/services/03_BaseData_External/Land_Base/MapServer/0
+  planting_sites: https://services.arcgis.com/NummVBqZSIJKUeVR/ArcGIS/rest/services/0_MapService_AdoptATree/FeatureServer
+
+landsat:
+  stac_url: https://planetarycomputer.microsoft.com/api/stac/v1
+  collection: landsat-c2-l2
+  platforms: [landsat-8, landsat-9]
+  years: [2019, 2020, 2021, 2022, 2023, 2024]
+  months: [6, 7, 8]
+  max_cloud_cover: 20
+  max_scenes: 15               # 5 per tile; Houston is ~3.5x NYC's area, so keep bronze sane
+  # City straddles WRS paths 025 and 026. 026/040 only clips the SW corner (~4% of bbox).
+  skip_tiles: ["026/040"]
+  st_scale: 0.00341802
+  st_offset: 149.0
+
+h3:
+  model_res: 10
+  map_res: 11
+
+units:
+  store: celsius
+  display: fahrenheit
+
+# Obstacles for tree placement: Overture Maps buildings (Microsoft + OSM + others merged) and
+# road/rail segments, public GeoParquet on S3 (ODbL / CDLA-Permissive). Read with DuckDB.
+footprints:
+  s3_base: s3://overturemaps-us-west-2/release
+  release: 2026-10-21.0
+  s3_region: us-west-2
+  building_setback_m: 2.0     # keep crowns/roots off walls and foundations
+  rail_half_width_m: 5.0
+  # buffer around each segment's centerline: paved half-width + ~0.5 m curb
+  road_half_width_m:
+    motorway: 15.0
+    trunk: 12.0
+    primary: 9.0
+    secondary: 8.0
+    tertiary: 6.0
+    residential: 5.0
+    unclassified: 5.0
+    living_street: 4.0
+    service: 3.0
+    pedestrian: 2.0
+    footway: 1.0
+    cycleway: 1.0
+    path: 1.0
+    steps: 1.0
+    track: 2.0
+    default: 5.0
+
+planting:
+  crown_m2: 50          # young street tree crown at ~10 years (placeholder; species-specific later)
+  utm_srid: 32615       # UTM 15N, meters, for buffers and areas
+  spot_res: 13          # open ground is tested on H3 res-13 cells (~44 m2, ~7 m apart)
+  thin_res: 12          # then at most one spot per res-12 cell (~300 m2, ~16 m apart) = one tree each
+  spot_max_imperv_pct: 90   # skip spots in paved-over blocks (parking lots) per NLCD at res 11
+  spot_max_canopy_pct: 50   # and spots already under canopy
+  usable_share: 0.5     # share of open spots that are realistically plantable (private yards, utilities)
+  max_trees_per_cell: 30
+  fallback_spot_m2: 300 # open-ground capacity when footprints are missing: open m2 x usable / this
+  saturation_c: 1.5     # optimizer diminishing returns: marginal effect x exp(-cooled/saturation)
+  plan_sizes: [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 5000]
+
+agent:
+  llm_endpoint: databricks-llama-4-maverick
+  fallback_llm_endpoint: databricks-meta-llama-3-3-70b-instruct
+  default_cost_per_tree: 1500  # placeholder: replace with Houston Parks / Trees for Houston figures
+  cost_tolerance: 0.35

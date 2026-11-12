@@ -1,0 +1,13 @@
+# Local development: tests, the eval script, and running the dashboard against exported data.
+-r app/requirements.txt
+pyyaml
+pytest
+pystac-client
+planetary-computer
+rasterio
+pyproj
+requests
+lightgbm
+scikit-learn
+statsmodels
+httpx

@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.databricks/
+data/
+*.tif
+.env
+app/heat/
+
+# local-only: editor/agent settings, workspace-specific outputs, private notes
+.claude/
+eval/results/genie_*.json
+REVIEW.md
+WRITEUP.md

@@ -1,0 +1,16 @@
+﻿{"id": "r01", "text": "We've got $250k for about 600 trees this season. Stay away from power lines, prioritize District J, and favor bus stops.", "expect": {"budget_usd": 250000, "n_trees": 600, "exclude": ["overhead_wires"], "districts": {"J": null}, "attractors": ["bus_stops"]}, "should_ask": ["district_prefs[J].strength", "cost_per_tree"]}
+{"id": "r02", "text": "Plan 1,000 trees citywide. Maximize cooling.", "expect": {"n_trees": 1000, "objective": "cooling", "districts": {}}, "should_ask": []}
+{"id": "r03", "text": "Plant 500 trees, at least 40% of them in District H.", "expect": {"n_trees": 500, "districts": {"H": "hard"}}, "should_ask": []}
+{"id": "r04", "text": "I have $750,000. Ideally lean toward District C. Trees cost about $1,500 each.", "expect": {"budget_usd": 750000, "cost_per_tree": 1500, "districts": {"C": "soft"}}, "should_ask": []}
+{"id": "r05", "text": "Give me a plan for 2,500 trees that helps the most vulnerable residents.", "expect": {"n_trees": 2500, "objective": "vulnerability", "districts": {}}, "should_ask": []}
+{"id": "r06", "text": "We need to focus on District K and District D this year, 800 trees.", "expect": {"n_trees": 800, "districts": {"K": null, "D": null}}, "should_ask": ["district_prefs[K].strength", "district_prefs[D].strength"]}
+{"id": "r07", "text": "How should we spend our tree money?", "expect": {"districts": {}}, "should_ask": ["n_trees"]}
+{"id": "r08", "text": "300 trees. Avoid narrow sidewalks and transmission corridors.", "expect": {"n_trees": 300, "exclude": ["narrow_sidewalk", "transmission"], "districts": {}}, "should_ask": []}
+{"id": "r09", "text": "Budget is $1.2 million for 800 trees, District B must get at least 25%.", "expect": {"budget_usd": 1200000, "n_trees": 800, "districts": {"B": "hard"}}, "should_ask": []}
+{"id": "r10", "text": "Plant 400 trees near schools, prefer District F if possible.", "expect": {"n_trees": 400, "attractors": ["schools"], "districts": {"F": "soft"}}, "should_ask": []}
+{"id": "r11", "text": "Let's do 1500 trees with a balanced approach between cooling and equity.", "expect": {"n_trees": 1500, "objective": "balanced", "districts": {}}, "should_ask": []}
+{"id": "r12", "text": "We can afford $90k, trees run $450 each through our nonprofit partner. Prioritize district a.", "expect": {"budget_usd": 90000, "cost_per_tree": 450, "districts": {"A": null}}, "should_ask": ["district_prefs[A].strength"]}
+{"id": "r13", "text": "Plan 200 trees around senior centers.", "expect": {"n_trees": 200, "attractors": ["senior_centers"], "districts": {}}, "should_ask": []}
+{"id": "r14", "text": "5000 trees, no more than that, and keep them away from overhead utility wires.", "expect": {"n_trees": 5000, "exclude": ["overhead_wires"], "districts": {}}, "should_ask": []}
+{"id": "r15", "text": "We have $400,000 for 200 trees, District E is the council member's priority.", "expect": {"budget_usd": 400000, "n_trees": 200, "districts": {"E": null}}, "should_ask": ["district_prefs[E].strength"]}
+{"id": "r16", "text": "Plant 1,200 trees. Only District G.", "expect": {"n_trees": 1200, "districts": {"G": "hard"}}, "should_ask": []}

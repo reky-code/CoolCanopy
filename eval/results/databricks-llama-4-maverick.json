@@ -1,0 +1,397 @@
+{
+  "summary": {
+    "n": 16,
+    "field_accuracy": 1.0,
+    "exact_match": 1.0,
+    "clarification_accuracy": 1.0,
+    "mean_latency_s": 3.6625
+  },
+  "rows": [
+    {
+      "id": "r01",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [
+        "district_prefs[J].strength",
+        "cost_per_tree"
+      ],
+      "parsed": {
+        "budget_usd": 250000.0,
+        "n_trees": 600,
+        "cost_per_tree": null,
+        "exclude": [
+          "overhead_wires"
+        ],
+        "district_prefs": [
+          {
+            "district": "J",
+            "strength": null,
+            "min_share": null,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [
+          {
+            "type": "bus_stops",
+            "radius_m": 100,
+            "weight": 1.5
+          }
+        ],
+        "objective": "vulnerability"
+      },
+      "latency_s": 3.6
+    },
+    {
+      "id": "r02",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 1000,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [],
+        "attractors": [],
+        "objective": "cooling"
+      },
+      "latency_s": 3.8
+    },
+    {
+      "id": "r03",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 500,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "H",
+            "strength": "hard",
+            "min_share": 0.4,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 3.7
+    },
+    {
+      "id": "r04",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": 750000.0,
+        "n_trees": null,
+        "cost_per_tree": 1500.0,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "C",
+            "strength": "soft",
+            "min_share": null,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 4.2
+    },
+    {
+      "id": "r05",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 2500,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 4.1
+    },
+    {
+      "id": "r06",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [
+        "district_prefs[K].strength",
+        "district_prefs[D].strength"
+      ],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 800,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "K",
+            "strength": null,
+            "min_share": null,
+            "weight": 2.0
+          },
+          {
+            "district": "D",
+            "strength": null,
+            "min_share": null,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 2.8
+    },
+    {
+      "id": "r07",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [
+        "n_trees"
+      ],
+      "parsed": {},
+      "latency_s": 3.1
+    },
+    {
+      "id": "r08",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 300,
+        "cost_per_tree": null,
+        "exclude": [
+          "narrow_sidewalk",
+          "transmission"
+        ],
+        "district_prefs": [],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 4.1
+    },
+    {
+      "id": "r09",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": 1200000.0,
+        "n_trees": 800,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "B",
+            "strength": "hard",
+            "min_share": 0.25,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 4.3
+    },
+    {
+      "id": "r10",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 400,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "F",
+            "strength": "soft",
+            "min_share": null,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [
+          {
+            "type": "schools",
+            "radius_m": 100,
+            "weight": 1.5
+          }
+        ],
+        "objective": "vulnerability"
+      },
+      "latency_s": 3.5
+    },
+    {
+      "id": "r11",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 1500,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [],
+        "attractors": [],
+        "objective": "balanced"
+      },
+      "latency_s": 4.5
+    },
+    {
+      "id": "r12",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [
+        "district_prefs[A].strength"
+      ],
+      "parsed": {
+        "budget_usd": 90000.0,
+        "n_trees": null,
+        "cost_per_tree": 450.0,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "A",
+            "strength": null,
+            "min_share": null,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 2.2
+    },
+    {
+      "id": "r13",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 200,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [],
+        "attractors": [
+          {
+            "type": "senior_centers",
+            "radius_m": 100,
+            "weight": 1.5
+          }
+        ],
+        "objective": "vulnerability"
+      },
+      "latency_s": 3.6
+    },
+    {
+      "id": "r14",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 5000,
+        "cost_per_tree": null,
+        "exclude": [
+          "overhead_wires"
+        ],
+        "district_prefs": [],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 4.9
+    },
+    {
+      "id": "r15",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [
+        "district_prefs[E].strength"
+      ],
+      "parsed": {
+        "budget_usd": 400000.0,
+        "n_trees": 200,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "E",
+            "strength": null,
+            "min_share": null,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 2.5
+    },
+    {
+      "id": "r16",
+      "field_accuracy": 1.0,
+      "exact": true,
+      "ask_correct": true,
+      "failed_fields": [],
+      "asked": [],
+      "parsed": {
+        "budget_usd": null,
+        "n_trees": 1200,
+        "cost_per_tree": null,
+        "exclude": [],
+        "district_prefs": [
+          {
+            "district": "G",
+            "strength": "hard",
+            "min_share": 0.4,
+            "weight": 2.0
+          }
+        ],
+        "attractors": [],
+        "objective": "vulnerability"
+      },
+      "latency_s": 3.7
+    }
+  ]
+}

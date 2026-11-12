@@ -1,0 +1,67 @@
+# Serverless job (Free Edition has no classic clusters).
+# Notebook tasks install their own deps with %pip at the top of each notebook.
+resources:
+  jobs:
+    heat_pipeline:
+      name: heat-pipeline
+      max_concurrent_runs: 1
+      parameters:
+        - name: city_config
+          default: ${var.city_config}
+      tasks:
+        - task_key: setup
+          notebook_task:
+            notebook_path: ../notebooks/00_setup.sql
+            warehouse_id: ${var.warehouse_id}
+        - task_key: ingest_landsat
+          depends_on: [{task_key: setup}]
+          notebook_task:
+            notebook_path: ../notebooks/01_ingest_landsat.py
+        - task_key: ingest_context
+          depends_on: [{task_key: setup}]
+          notebook_task:
+            notebook_path: ../notebooks/03_ingest_context.py
+        - task_key: ingest_footprints
+          depends_on: [{task_key: setup}]
+          notebook_task:
+            notebook_path: ../notebooks/03b_ingest_footprints.py
+        - task_key: silver_lst_h3
+          depends_on: [{task_key: ingest_landsat}]
+          notebook_task:
+            notebook_path: ../notebooks/02_silver_lst_h3.sql
+            warehouse_id: ${var.warehouse_id}
+        - task_key: silver_gold_hex
+          depends_on: [{task_key: silver_lst_h3}, {task_key: ingest_context}]
+          notebook_task:
+            notebook_path: ../notebooks/04_silver_gold_hex.sql
+            warehouse_id: ${var.warehouse_id}
+        - task_key: ingest_people
+          depends_on: [{task_key: silver_gold_hex}]
+          notebook_task:
+            notebook_path: ../notebooks/05_ingest_people.py
+        - task_key: train_model
+          depends_on: [{task_key: silver_gold_hex}]
+          notebook_task:
+            notebook_path: ../notebooks/06_train_heat_model.py
+        - task_key: plantable_space
+          depends_on: [{task_key: silver_gold_hex}, {task_key: ingest_footprints}]
+          notebook_task:
+            notebook_path: ../notebooks/04b_plantable_space.sql
+            warehouse_id: ${var.warehouse_id}
+        - task_key: planting_effects
+          depends_on: [{task_key: train_model}, {task_key: ingest_people}, {task_key: plantable_space}]
+          notebook_task:
+            notebook_path: ../notebooks/07_planting_effects.py
+        - task_key: simulate_plans
+          depends_on: [{task_key: planting_effects}]
+          notebook_task:
+            notebook_path: ../notebooks/08_simulate_plans.py
+        - task_key: agent_tools
+          depends_on: [{task_key: simulate_plans}]
+          notebook_task:
+            notebook_path: ../notebooks/09_agent_tools.sql
+            warehouse_id: ${var.warehouse_id}
+        - task_key: export_app_data
+          depends_on: [{task_key: simulate_plans}]
+          notebook_task:
+            notebook_path: ../notebooks/10_export_app_data.py

@@ -1,0 +1,30 @@
+bundle:
+  name: heat-trees
+
+variables:
+  catalog:
+    default: workspace
+  schema:
+    default: heat
+  city_config:
+    description: City config file, relative to the bundle root
+    default: conf/city_houston.yaml
+  warehouse_id:
+    description: SQL warehouse for SQL notebook tasks
+    lookup:
+      warehouse: Serverless Starter Warehouse
+
+include:
+  - resources/*.yml
+
+# app/heat is a gitignored copy of src/heat made by scripts/sync_app.ps1 or sync_app.sh; bundle sync skips
+# gitignored files unless they are listed here, and the app imports `heat` from its own folder.
+sync:
+  include:
+    - app/heat/**
+
+targets:
+  dev:
+    mode: development
+    default: true
+    # pick the workspace with --profile <name> or DATABRICKS_CONFIG_PROFILE

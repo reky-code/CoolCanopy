@@ -1,0 +1,17 @@
+# Databricks App: planner UI + agent. The heat package is copied into app/heat by
+# scripts/sync_app.ps1 (or sync_app.sh) before deploy (the app uploads only its own folder).
+resources:
+  apps:
+    heat_planner:
+      name: heat-planner
+      description: Houston heat & trees planting planner (map, slider, agent)
+      source_code_path: ../app
+      resources:
+        - name: warehouse
+          sql_warehouse:
+            id: ${var.warehouse_id}
+            permission: CAN_USE
+        - name: llm
+          serving_endpoint:
+            name: databricks-llama-4-maverick
+            permission: CAN_QUERY
